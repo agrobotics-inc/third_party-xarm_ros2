@@ -7,7 +7,58 @@
 
   <xacro:macro name="device_macro_begin" params=""> 
     <!-- Insert at the beginning of xarm_device_macro.xacro -->
+
+    <link name="world" />
+
+    <link name="wagon_base">
+      <visual>
+        <geometry>
+          <box size="1.0 0.3 0.3"/>
+        </geometry>
+        <material name="mdf_brown">
+          <color rgba="0.729 0.549 0.388 1"/>
+        </material>
+      </visual>
+    </link>
+    <joint name="${prefix}wagon_base_world_joint" type="fixed">
+      <parent link="world" />
+      <child link="wagon_base" />
+      <origin xyz="${attach_xyz}" rpy="${attach_rpy}" />
+    </joint>
+
+    <link name="mast">
+      <visual>
+        <geometry>
+          <cylinder radius="0.03" length="1.0" />
+        </geometry>
+        <material name="pvc_grey">
+          <color rgba="0.2 0.2 0.2 1"/>
+        </material>
+      </visual>
+    </link>
+    <joint name="wagon_base_mast_joint" type="fixed">
+      <parent link="wagon_base" />
+      <child link="mast" />
+      <origin xyz="0.2 0 0.65" rpy="0 0 0"/>
+    </joint>
+
+    <xacro:include filename="$(find depthai_descriptions)/urdf/include/depthai_macro.urdf.xacro" />
+    <xacro:depthai_camera 
+      camera_name = "oak"
+      camera_model = "OAK-D"
+      parent = "wagon_base" 
+      base_frame = "oak-d_frame" 
+      cam_pos_x = "0" 
+      cam_pos_y = "0" 
+      cam_pos_z = "1" 
+      cam_roll = "0" 
+      cam_pitch = "0" 
+      cam_yaw = "0"
+    />
+  
   </xacro:macro>
+
+
   <xacro:macro name="device_macro_end" params=""> 
     <!-- Insert at the end of xarm_device_macro.xacro -->
   </xacro:macro>
