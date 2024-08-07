@@ -42,6 +42,20 @@
       <origin xyz="0.2 0 0.65" rpy="0 0 0"/>
     </joint>
 
+    <link name="aruco_frame">
+      <visual>
+        <origin xyz="-.001 0 0" rpy="0 ${pi / 2.0} 0"/>
+        <geometry>
+          <box size=".06 .06 .002"/>
+        </geometry>
+      </visual>
+    </link>
+    <joint name="aruco_frame_joint" type="fixed">
+      <parent link="link_eef" />
+      <child link="aruco_frame" />
+      <origin xyz=".052 0 0"/>
+    </joint>
+
     <xacro:include filename="$(find depthai_descriptions)/urdf/include/depthai_macro.urdf.xacro" />
     <xacro:depthai_camera 
       camera_name = "oak"
